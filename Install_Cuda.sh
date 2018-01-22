@@ -63,7 +63,16 @@ sudo apt-get install -y build-essential cmake
 sudo bash ${cur_workdir}/cuda_*_*_linux.run --driver --toolkit --no-opengl-libs --run-nvidia-xconfig --override --silent
 
 if [ ${var_auto_reboot} = true ]; then
-    sudo reboot now
+    echo_error "Please rerun this script after reboot ! ! !"
+    read -n1 -sp "Press any key except 'ESC' to reboot: " var_ikey
+    case ${var_ikey:=*} in
+        $'\e') 
+            echo_success "Reboot has been canceled"
+        ;;
+        *) 
+            sudo reboot now
+        ;;
+    esac
 else
     # CUDA Env
     CUDA_Profile_Root=/etc/profile.d/cuda.sh
@@ -82,5 +91,14 @@ else
     # Cudnn Install 
     sudo tar -zxvf ${cur_workdir}/cudnn-*.tgz -C /usr/local
     
-    sudo service lightdm start
+    read -n1 -sp "Press any key except 'ESC' to launch desktop: " var_ikey
+    case ${var_ikey:=*} in
+        $'\e') 
+            echo_success "Reboot has been canceled"
+        ;;
+        *) 
+            sudo service lightdm start
+        ;;
+    esac
+
 fi
