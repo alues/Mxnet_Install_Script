@@ -41,12 +41,11 @@ sudo service lightdm stop
 Nouveau_Blacklist_Root=/etc/modprobe.d/nvidia-installer-disable-nouveau.conf
 
 # Reboot System
-var_auto_reboot=false
 if [ ! -f ${Nouveau_Blacklist_Root} ]; then
     var_auto_reboot=true
 fi
 
-if [ ${var_auto_reboot} = true ]; then
+if [ ${var_auto_reboot:=false} = true ]; then
     # Update Source
     sudo apt-get update
 

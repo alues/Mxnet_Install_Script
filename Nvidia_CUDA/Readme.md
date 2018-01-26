@@ -1,5 +1,5 @@
 # CUDA & CUDNN Kit root  
-> Please Download [CUDA](https://developer.nvidia.com/cuda-downloads) &amp; [CUDNN](https://developer.nvidia.com/rdp/cudnn-download) Kit to this folder 
+> Please Download [CUDA](https://developer.nvidia.com/cuda-toolkit-archive) &amp; [CUDNN](https://developer.nvidia.com/rdp/cudnn-download) Kit to this folder 
 
 ## Run the cmd below to download the CUDA &amp; CUDNN
 > ```
