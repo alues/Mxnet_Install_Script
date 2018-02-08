@@ -28,9 +28,9 @@ CUDA_Kit_list=(
 
 # Dectect CUDA & CUDNN 
 for v in ${CUDA_Kit_list[@]}; do
-    if [ ! -f ${cur_workdir}/${v} ]; then
+    if [ ! -e ${cur_workdir}/${v} ]; then
         echo_error 'Please make sure u had download CUDA & CUDNN Kit'
-        echo_success "Problem by reading ${cur_workdir}/readme.md"
+        echo_success "Problem could be solved by reading ${cur_workdir}/readme.md"
         echo_error "${cur_workdir}/${v} Needed"
         exit 1
     fi
@@ -41,7 +41,7 @@ sudo service lightdm stop
 Nouveau_Blacklist_Root=/etc/modprobe.d/nvidia-installer-disable-nouveau.conf
 
 # Reboot System
-if [ ! -f ${Nouveau_Blacklist_Root} ]; then
+if [ ! -e ${Nouveau_Blacklist_Root} ]; then
     var_auto_reboot=true
 fi
 

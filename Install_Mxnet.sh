@@ -8,7 +8,7 @@ cur_workdir=${cur_path}/Mxnet
 set -e
 
 PROFILE_ROOT=/etc/profile.d/digits.sh
-if [ -f ${PROFILE_ROOT} ]; then
+if [ -e ${PROFILE_ROOT} ]; then
     source ${PROFILE_ROOT}
 fi
 
@@ -34,9 +34,9 @@ Mxnet_Kit_list=(
 
 # Dectect Mxnet & Warp-CTC
 for v in ${Mxnet_Kit_list[@]}; do
-    if [ ! -f ${cur_workdir}/${v} ]; then
+    if [ ! -e ${cur_workdir}/${v} ]; then
         echo_error 'Please make sure u had download Mxnet & Warp-CTC'
-        echo_success "Problem by reading ${cur_workdir}/readme.md"
+        echo_success "Problem could be solved by reading ${cur_workdir}/readme.md"
         echo_error "${cur_workdir}/${v} Needed"
         exit 1
     fi

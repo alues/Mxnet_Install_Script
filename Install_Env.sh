@@ -67,7 +67,7 @@ if [ ${DEV_MODE} = true ] && [ -d ${pycharm_path} ]; then
     sudo chown -R ${cur_usr} ~/pycharm-*
 fi  
 
-# Init Caffe / Mxnet -> Env
+# Init Mxnet -> Env
 PROFILE_ROOT=/etc/profile.d/digits.sh
 
 echo 'export MXNET_ROOT=~/mxnet' >> ${PROFILE_ROOT}
@@ -80,5 +80,5 @@ source ${PROFILE_ROOT}
 ssh_root=${cur_path}/SSH
 
 if [ -d ${ssh_root} ]; then
-    sudo bash ${cur_path}/SSH/Install_SSH.sh
+    sudo bash ${ssh_root}/Install_SSH.sh
 fi

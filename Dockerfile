@@ -7,8 +7,8 @@ MAINTAINER Alues “alues@icloud.com”
 RUN apt-key del 7FA2AF80 && rm /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
 
 # RUN Installation
-RUN apt-get update
-RUN apt-get install -y sudo net-tools vim
+RUN apt-get update \
+ && apt-get install -y sudo net-tools vim
 
 # COPY Software
 ARG SoftWare_Root=Deep_Learning
@@ -29,11 +29,9 @@ COPY ${Software_Script} ./${Software_Script}/
 # Copy BASH Script
 COPY ./Install_*.sh ./
 
-# Install Env
-RUN bash Install_Env.sh
-
-# Install Mxnet
-RUN bash Install_Mxnet.sh
+# Install Env & Mxnet
+RUN bash Install_Env.sh \
+ && bash Install_Mxnet.sh
 
 # Clear Env
 WORKDIR /root
