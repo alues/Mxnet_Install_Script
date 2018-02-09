@@ -56,7 +56,7 @@ if [ ${var_auto_reboot:=false} = true ]; then
 fi
 
 # Install Basic Env
-sudo apt-get install -y build-essential cmake
+sudo apt-get install -y dkms linux-headers-generic build-essential cmake
 
 # CUDA Install 
 sudo bash ${cur_workdir}/cuda_*_*_linux.run --driver --toolkit --no-opengl-libs --run-nvidia-xconfig --override --silent
