@@ -8,7 +8,7 @@
 > > ### Tested OS
 > > - [x] Ubuntu 14.04.5 LTS
 > > - [x] [Ubuntu 16.04.3 LTS](https://www.ubuntu.com/download/desktop)
-> > - [ ] ~~Centos~~
+> > - [ ] Centos(**Coming soon**)
 
 * **Make sure u had download the [CUDA](https://developer.nvidia.com/cuda-toolkit-archive) &amp; [CUDNN](https://developer.nvidia.com/rdp/cudnn-download) Before Installation**  
 * **Switch the terminal by `Ctrl + Alt + F1`**
