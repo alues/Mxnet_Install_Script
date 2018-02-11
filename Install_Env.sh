@@ -4,7 +4,7 @@ cur_usr=`basename ~/`
 cur_path=$(cd "$(dirname "$0")"; pwd)
 DEV_MODE=true
 
-# Stop the script when any Error occour
+# Stop the script when any Error occur
 set -e
 
 # Install System Status Monitor

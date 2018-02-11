@@ -2,6 +2,7 @@
 
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/Nvidia_CUDA
+cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/"`
 
 # Stop the script when any Error occur
 set -e
@@ -56,7 +57,7 @@ if [ ${var_auto_reboot:=false} = true ]; then
 fi
 
 # Install Basic Env
-sudo apt-get install -y dkms linux-headers-generic build-essential cmake
+sudo apt-get install -y dkms linux-headers-$(uname -r) build-essential cmake
 
 # CUDA Install 
 sudo bash ${cur_workdir}/cuda_*_*_linux.run --driver --toolkit --no-opengl-libs --run-nvidia-xconfig --override --silent

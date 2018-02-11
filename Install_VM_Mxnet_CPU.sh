@@ -4,7 +4,7 @@ cur_usr=`basename ~/`
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/Mxnet
 
-# Stop the script when any Error occour
+# Stop the script when any Error occur
 set -e
 
 # Functions
