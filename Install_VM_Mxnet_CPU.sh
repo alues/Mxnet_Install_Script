@@ -43,7 +43,7 @@ sudo apt-get install -y python-dev python-setuptools python-numpy python-pip pyt
 pip_plugin_path=${cur_path}/Python_PKG
 
 if [ -d ${pip_plugin_path} ]; then
-    sudo pip install -U ${pip_plugin_path}/pip-*.tar.gz
+    sudo pip install --no-cache-dir -U ${pip_plugin_path}/pip-*.tar.gz
     # Install PIP Plugins
     pip_plugin_list=(
         setuptools-*.zip
@@ -56,10 +56,10 @@ if [ -d ${pip_plugin_path} ]; then
     )
     
     for v in ${pip_plugin_list[@]}; do
-        sudo pip install ${pip_plugin_path}/${v}
+        sudo pip install --no-cache-dir ${pip_plugin_path}/${v}
     done
     
-    sudo pip3 install -U ${pip_plugin_path}/pip-*.tar.gz
+    sudo pip3 install --no-cache-dir -U ${pip_plugin_path}/pip-*.tar.gz
     # Install PIP3 Plugins
     pip3_plugin_list=(
         setuptools-*.zip
@@ -74,7 +74,7 @@ if [ -d ${pip_plugin_path} ]; then
     )
 
     for v in ${pip3_plugin_list[@]}; do
-        sudo pip3 install ${pip_plugin_path}/${v}
+        sudo pip3 install --no-cache-dir ${pip_plugin_path}/${v}
     done
 fi
 
@@ -85,4 +85,4 @@ sudo make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas
 cd ~/mxnet/python
 sudo pip install -e .
 
-echo "Mxnet Install Done"
+echo_success "Mxnet Install Done"

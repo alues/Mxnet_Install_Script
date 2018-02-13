@@ -99,10 +99,10 @@ if [ ${var_auto_reboot} = true ]; then
     echo_error "Please rerun this script after reboot ! ! !"
     read -n1 -sp "Press any key except 'ESC' to reboot: " var_ikey
     case ${var_ikey:=*} in
-        $'\e') 
+        $'\e')
             echo_success "Reboot has been canceled"
         ;;
-        *) 
+        *)
             sudo reboot now
         ;;
     esac
