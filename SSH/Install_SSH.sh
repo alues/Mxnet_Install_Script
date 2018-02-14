@@ -5,7 +5,7 @@ cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/SSH-KEY
 cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/"`
 
-# Stop the script when any Error occour
+# Stop the script when any Error occur
 set -e
 
 # Functions
@@ -54,10 +54,10 @@ sudo sed -ri "s/^\s*#?\s*(HostKey\s+.*)/#\1/g" /etc/ssh/sshd_config
 case ${cur_sys} in
     "ubuntu")
         sudo service ssh restart
-        ;;
+    ;;
     "centos")
         sudo systemctl restart sshd.service
-        ;;
+    ;;
 esac
 
 echo_success "SSH Server Ready"

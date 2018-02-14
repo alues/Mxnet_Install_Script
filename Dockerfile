@@ -4,7 +4,8 @@ FROM cuda:base
 MAINTAINER Alues “alues@icloud.com”
 
 # Remove Nvidia GPG Key & apt_list
-RUN apt-key del 7FA2AF80 && rm /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
+RUN apt-key del 7FA2AF80 \
+ && rm -f /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
 
 # RUN Installation
 RUN apt-get update \

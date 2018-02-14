@@ -2,6 +2,7 @@
 
 cur_usr=`basename ~/`
 cur_path=$(cd "$(dirname "$0")"; pwd)
+cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/"`
 cur_workdir=${cur_path}/Mxnet
 
 # Stop the script when any Error occur

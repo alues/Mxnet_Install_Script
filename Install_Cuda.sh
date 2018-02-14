@@ -21,8 +21,13 @@ function echo_success(){
 }
 
 function service_detect(){
-    tmp_status=`service --status-all | sed -r "s/^\s*\[\s*[+|-]\s*\]\s*${1}\$/0/;tA;d;:A;"`
-    return ${tmp_status:-1}
+    tmp_status=`service --status-all | sed -r "s/^\s*\[\s*[+|-]\s*\]\s*${1}\$/true/;tA;d;:A;"`
+    printf ${tmp_status:-false}
+}
+
+function runlevel_detect(){
+    tmp_status=`runlevel | sed -r "s/[N0-6]\s+${1}/true/;tA;d;:A;"`
+    printf ${tmp_status:-false}
 }
 
 CUDA_Kit_list=(
@@ -46,13 +51,17 @@ done
 Desktop_Service=false
 case ${cur_sys} in
     "ubuntu")
-        Desktop_Service=$(service_detect "lightdm")
+        Desktop_Service=`service_detect "lightdm"`
         if ${Desktop_Service}; then
             sudo service lightdm stop
         fi
     ;;
     "centos")
-        
+        Desktop_Service=`runlevel_detect "5"`
+        if ${Desktop_Service}; then
+            # sudo systemctl isolate multi-user.target
+            sudo systemctl set-default multi-user.target
+        fi
     ;;
 esac
 
@@ -137,10 +146,13 @@ else
                     fi
                 ;;
                 "centos")
-                    
+                    if ${Desktop_Service}; then
+                        sudo systemctl set-default graphical.target
+                        sudo systemctl isolate graphical.target
+                    fi
                 ;;
             esac
         ;;
     esac
-
+    echo_success "CUDA Ready"
 fi

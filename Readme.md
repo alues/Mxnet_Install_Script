@@ -16,11 +16,13 @@
 > ```bash
 >    sudo bash Install_CUDA.sh
 > ```
+
 ----
+
 > ## Evn Installation
 > * Auto Deploy Basic Software
 > * Auto Install Python2 & Python3 Plugins
-> * Extract [Pycharm](https://www.jetbrains.com/pycharm/)
+> * Extract [Pycharm](https://www.jetbrains.com/pycharm/)[Option]
 > * Export Mxnet Env
 
 ```bash
@@ -30,7 +32,7 @@
 > ## Mxnet Installation
 > * Auto Install Mxnet with Warp-CTC
 
-* **Make sure u had [`Mxnet` `Warp-CTC`](https://github.com/alues/Mxnet_Install_Script/blob/master/Mxnet/Readme.md) Ready**
+* **Make sure u had [`Mxnet` `Warp-CTC`](https://github.com/alues/Mxnet_Install_Script/blob/master/Mxnet/Readme.md) Ready Before Installation**
 
 ```bash
     sudo bash Install_Mxnet.sh

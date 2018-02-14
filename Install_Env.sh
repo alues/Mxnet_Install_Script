@@ -2,23 +2,52 @@
 
 cur_usr=`basename ~/`
 cur_path=$(cd "$(dirname "$0")"; pwd)
+cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/"`
 DEV_MODE=true
 
 # Stop the script when any Error occur
 set -e
 
-# Install System Status Monitor
-sudo apt-get update
-sudo apt-get install -y htop iotop
+# Functions
+Color_Error='\E[1;31m'
+Color_Success='\E[1;32m'
+Color_Res='\E[0m'
 
-# Install Python Plugins
-sudo apt-get install -y build-essential cmake git vim rar unrar unzip screen
-sudo apt-get install -y python-dev python-pip python3-pip python-opencv
+function echo_error(){
+    echo -e "${Color_Error}${1}${Color_Res}"
+}
 
-# Libs For numpy scipy scikit
-sudo apt-get install -y libblas-dev libatlas-base-dev liblapack-dev libopencv-dev gfortran
-# Libs For Pillow
-sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+function echo_success(){
+    echo -e "${Color_Success}${1}${Color_Res}"
+}
+
+case ${cur_sys} in
+    "ubuntu")
+        # Install System Status Monitor
+        sudo apt-get update
+        sudo apt-get install -y htop iotop
+
+        # Install Python Plugins
+        sudo apt-get install -y build-essential cmake git vim rar unrar unzip screen
+        sudo apt-get install -y python-dev python-pip python3-pip python-opencv
+
+        # Libs For blas opencv
+        sudo apt-get install -y libblas-dev libatlas-base-dev liblapack-dev libopencv-dev gfortran
+
+        # Libs For Pillow
+        sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+    ;;
+    "centos")
+        # Install System Status Monitor
+        sudo yum install -y epel-release
+        sudo yum install -y htop iotop
+
+        # Install Python Plugins
+        sudo yum install -y make cmake git vim rar unrar unzip screen
+
+    ;;
+esac
+
 
 pip_plugin_path=${cur_path}/Python_PKG
 
@@ -82,3 +111,5 @@ ssh_root=${cur_path}/SSH
 if [ -d ${ssh_root} ]; then
     sudo bash ${ssh_root}/Install_SSH.sh
 fi
+
+echo_success "Env Ready"
