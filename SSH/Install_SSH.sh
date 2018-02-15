@@ -1,6 +1,6 @@
 #!bin/bash
 
-cur_usr=`basename ~/`
+cur_usr=`basename $HOME`
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/SSH-KEY
 cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/"`
@@ -32,22 +32,22 @@ case ${cur_sys} in
     ;;
 esac
 
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
+sudo mkdir -p ${HOME}/.ssh
+sudo chmod 700 ${HOME}/.ssh
 
 # Auth Pub KEY
 if [ -f ${cur_workdir}/id_*.pub ]; then
-	cat ${cur_workdir}/id_*.pub > ~/.ssh/authorized_keys
-	chmod 644 ~/.ssh/authorized_keys
+    cat ${cur_workdir}/id_*.pub > ${HOME}/.ssh/authorized_keys
+    chmod 644 ${HOME}/.ssh/authorized_keys
 fi
 
 # Switch Permission
-chown -R ${cur_usr} ~/.ssh
+chown -R ${cur_usr} ${HOME}/.ssh
 
 # Disable Password Login
-sudo sed -ri "s/^\s*#?\s*(PasswordAuthentication)\s+(yes|no)/\1 no/g" /etc/ssh/sshd_config
-sudo sed -ri "s/^\s*#?\s*(UsePAM)\s+(yes|no)/\1 no/g" /etc/ssh/sshd_config
-sudo sed -ri "s/^\s*#?\s*(HostKey\s+.*)/#\1/g" /etc/ssh/sshd_config
+sudo sed -ri "s/^\s*#?(\s*PasswordAuthentication)\s+(yes|no)\$/\\1 no/g" /etc/ssh/sshd_config
+sudo sed -ri "s/^\s*#?(\s*UsePAM)\s+(yes|no)\$/\\1 no/g" /etc/ssh/sshd_config
+sudo sed -ri "s/^\s*#?(\s*HostKey\s+.*)\$/#\\1/g" /etc/ssh/sshd_config
 
 # sudo rm -rf /etc/ssh/*.pub /etc/ssh/*_key
 

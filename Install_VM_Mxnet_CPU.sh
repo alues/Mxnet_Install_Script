@@ -84,6 +84,6 @@ cd ~/mxnet
 sudo make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas
 
 cd ~/mxnet/python
-sudo pip install -e .
+sudo pip install --no-cache-dir -e .
 
 echo_success "Mxnet Install Done"

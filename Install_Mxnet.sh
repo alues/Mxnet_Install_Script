@@ -76,7 +76,8 @@ sudo apt-get install -y ipython ipython-notebook
 
 # Install Mxnet Python
 cd ~/mxnet/python
-sudo python setup.py install
+sudo pip install --no-cache-dir -e .
+sudo pip3 install --no-cache-dir -e .
 
 # Install Python PIP Plugins
 sudo pip install graphviz
