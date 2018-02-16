@@ -2,16 +2,17 @@
 
 > ## CUDA Installation[GPU Option]
 > * Auto Disable `Nouveau`
-> * Auto Install Nvidia-Driver
-> * Auto Install CUDA & CUDNN Kit
+> * Auto Install [Nvidia Driver](http://www.nvidia.com/drivers)[Default Included in CUDA Kit]
+> * Auto Install [CUDA](http://docs.nvidia.com/cuda/cuda-installation-guide-linux/) & [CUDNN Kit](https://developer.nvidia.com/cudnn)
 
 > > ### Tested OS
 > > - [x] Ubuntu 14.04.5 LTS
 > > - [x] [Ubuntu 16.04.3 LTS](https://www.ubuntu.com/download/desktop)
-> > - [ ] Centos 7(**Coming soon**)
+> > - [x] Centos 7
 
 > * **Make sure u had download the [CUDA](https://developer.nvidia.com/cuda-toolkit-archive) &amp; [CUDNN](https://developer.nvidia.com/rdp/cudnn-download) Before Installation**  
 > * **Switch the terminal by `Ctrl + Alt + F1`**
+> * **`Script may need to run twice`**
 
 > ```bash
 >    sudo bash Install_CUDA.sh

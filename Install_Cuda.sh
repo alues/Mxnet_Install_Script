@@ -103,8 +103,24 @@ case ${cur_sys} in
     ;;
 esac
 
-# CUDA Install 
-sudo bash ${cur_workdir}/cuda_*_*_linux.run --driver --toolkit --no-opengl-libs --run-nvidia-xconfig --override --silent
+# Nvidia Driver Detect
+var_nvidia_exist=`modules_detect "nvidia"`
+Nvidia_Driver=${cur_workdir}/NVIDIA-Linux-x86_64-*.*.run
+
+if [ -e ${Nvidia_Driver} ]; then
+    sudo bash ${Nvidia_Driver} --dkms --disable-nouveau --run-nvidia-xconfig --silent
+    if ${var_nvidia_exist}; then
+        sudo bash ${cur_workdir}/cuda_*_*_linux.run --toolkit --override --silent
+    fi
+else
+    # CUDA Install
+    if ${var_nvidia_exist}; then
+        # Nvidia Driver installed
+        sudo bash ${cur_workdir}/cuda_*_*_linux.run --toolkit --override --silent
+    else
+        sudo bash ${cur_workdir}/cuda_*_*_linux.run --driver --no-opengl-libs --run-nvidia-xconfig --toolkit --override --silent
+    fi
+fi
 
 if ${var_auto_reboot}; then
     echo_error "Please rerun this script after reboot ! ! !"
@@ -132,7 +148,7 @@ else
     echo '/usr/local/cuda/lib64' > ${CUDA_Conf_Root}
     sudo ldconfig
 
-    # Cudnn Install
+    # CUDNN Install
     sudo tar -zxvf ${cur_workdir}/cudnn-*.tgz -C /usr/local
     
     read -n1 -sp "Press any key except 'ESC' to launch desktop: " var_ikey

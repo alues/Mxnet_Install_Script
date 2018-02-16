@@ -48,7 +48,6 @@ case ${cur_sys} in
     ;;
 esac
 
-
 pip_plugin_path=${cur_path}/Python_PKG
 
 if [ -d ${pip_plugin_path} ]; then
@@ -86,7 +85,6 @@ if [ -d ${pip_plugin_path} ]; then
         sudo pip3 install --no-cache-dir ${pip_plugin_path}/${v}
     done
 fi
-
 
 # Extract Pycharm
 pycharm_path=${cur_path}/Pycharm
