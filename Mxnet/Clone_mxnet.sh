@@ -1,7 +1,7 @@
 #!bin/bash
 
 # Stop the script when any Error occur
-set e
+set -e
 
 # Functions
 Color_Error='\E[1;31m'

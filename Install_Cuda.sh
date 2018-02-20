@@ -2,7 +2,7 @@
 
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/Nvidia_CUDA
-cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/"`
+cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/" | tr -d '\n'`
 
 # Stop the script when any Error occur
 set -e
@@ -21,17 +21,17 @@ function echo_success(){
 }
 
 function service_detect(){
-    tmp_status=`service --status-all | sed -r "s/^\s*\[\s*[+|-]\s*\]\s*${1}\$/true/;tA;d;:A;"`
+    tmp_status=`service --status-all | sed -r "s/^\s*\[\s*[+|-]\s*\]\s*${1}\$/true/;tA;d;:A;" | tr -d '\n'`
     printf ${tmp_status:-false}
 }
 
 function modules_detect(){
-    tmp_status=`lsmod | sed -r "s/^${1}\s+[0-9]+\s+[0-9]+.*\$/true/;tA;d;:A;"`
+    tmp_status=`lsmod | sed -r "s/^${1}\s+[0-9]+\s+[0-9]+.*\$/true/;tA;d;:A;" | tr -d '\n'`
     printf ${tmp_status:-false}
 }
 
 function runlevel_detect(){
-    tmp_status=`runlevel | sed -r "s/^[N0-6]\s+${1}\$/true/;tA;d;:A;"`
+    tmp_status=`runlevel | sed -r "s/^[N0-6]\s+${1}\$/true/;tA;d;:A;" | tr -d '\n'`
     printf ${tmp_status:-false}
 }
 

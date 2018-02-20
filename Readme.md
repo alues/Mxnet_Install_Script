@@ -6,7 +6,7 @@
 > * Auto Install [CUDA](http://docs.nvidia.com/cuda/cuda-installation-guide-linux/) & [CUDNN Kit](https://developer.nvidia.com/cudnn)
 
 > > ### Tested OS
-> > - [x] Centos 7
+> > - [x] [Centos 7](https://www.centos.org/download/)
 > > - [x] Ubuntu 14.04.5 LTS
 > > - [x] [Ubuntu 16.04.3 LTS](https://www.ubuntu.com/download/desktop)
 

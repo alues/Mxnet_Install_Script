@@ -1,0 +1,38 @@
+#!/usr/bin/env perl
+
+use 5.006;
+use strict;
+use warnings;
+
+sub shell ($@) {
+    my ($cmd, $dry_run) = @_;
+
+    print "$cmd\n";
+
+    system($cmd) == 0 or
+        die "ERROR: failed to run command: ", trim($cmd), "\n";
+}
+
+sub trim ($) {
+    my $cmd = shift;
+    $cmd =~ s/\n.*/.../s;
+    $cmd;
+}
+
+my $cur_sys = `cat /etc/*-release | sed -r "s/^ID=(.*)\$/\\1/;tA;d;:A;s/^\\"(.*)\\"\$/\\1/" | tr -d '\n'`;
+
+my %config = (
+    "centos" => {"CMD" => "yum"},
+    "ubuntu" => {"CMD" => "apt-get"},
+);
+
+my @tmp_rumtime_list = (
+    # CUDA
+    'cuda_*_*_linux.run',
+    # CUDNN
+    'cudnn-*.tgz',
+);
+
+foreach my $tmp_key (keys %config){
+    $config{$tmp_key}{"CUDA_Kit_List"} = [@tmp_rumtime_list];
+}
