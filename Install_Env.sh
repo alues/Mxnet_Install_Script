@@ -28,14 +28,15 @@ case ${cur_sys} in
         sudo apt-get install -y htop iotop
 
         # Install Python Plugins
-        sudo apt-get install -y build-essential cmake git vim rar unrar unzip screen
+        sudo apt-get install -y build-essential
+        sudo apt-get install -y cmake git vim screen rar unrar unzip
         sudo apt-get install -y python-dev python-pip python3-pip python-opencv
 
         # Libs For blas opencv
         sudo apt-get install -y libblas-dev libatlas-base-dev liblapack-dev libopencv-dev gfortran
 
         # Libs For Pillow
-        sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+        sudo apt-get install -y zlib1g-dev libtiff5-dev libjpeg8-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
     ;;
     "centos")
         # Install System Status Monitor
@@ -43,8 +44,15 @@ case ${cur_sys} in
         sudo yum install -y htop iotop
 
         # Install Python Plugins
-        sudo yum install -y make cmake git vim rar unrar unzip screen
+        sudo yum groupinstall -y "Development Tools" "Development Libraries"
+        sudo yum install -y cmake git vim screen rar unrar unzip
+        sudo yum install -y python-devel python2-pip python34-devel python34-pip
 
+        # Libs For blas opencv
+        sudo yum install -y liblas-devel openblas-devel atlas-devel lapack-devel opencv-devel libgfortran
+
+        # Libs For Pillow
+        sudo yum install -y zlib-devel libtiff-devel libjpeg-turbo-devel freetype-devel lcms2-devel libwebp-devel tcl-devel tk-devel tkinter
     ;;
 esac
 
@@ -97,7 +105,7 @@ fi
 # Init Mxnet -> Env
 PROFILE_ROOT=/etc/profile.d/digits.sh
 
-echo 'export MXNET_ROOT=~/mxnet' >> ${PROFILE_ROOT}
+echo "export MXNET_ROOT=~/mxnet" >> ${PROFILE_ROOT}
 echo 'export PYTHONPATH=$MXNET_ROOT/python:$PYTHONPATH' >> ${PROFILE_ROOT}
 echo "export DEV_MODE=${DEV_MODE}" >> ${PROFILE_ROOT}
 

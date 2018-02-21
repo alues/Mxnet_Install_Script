@@ -35,11 +35,18 @@ for v in ${Mxnet_Kit_list[@]}; do
         exit 1
     fi
 done
+case ${cur_sys} in
+    "ubuntu")
+        sudo apt-get update
+        sudo apt-get install -y build-essential git
+        sudo apt-get install -y libopenblas-dev liblapack-dev libopencv-dev libatlas-base-dev
+        sudo apt-get install -y python-dev python-setuptools python-numpy python-pip python3-pip python-opencv
+    ;;
+    "centos")
+        echo_success "Centos's Env Ready"
+    ;;
+esac
 
-sudo apt-get update
-sudo apt-get install -y build-essential git
-sudo apt-get install -y libopenblas-dev liblapack-dev libopencv-dev libatlas-base-dev
-sudo apt-get install -y python-dev python-setuptools python-numpy python-pip python3-pip python-opencv
 
 pip_plugin_path=${cur_path}/Python_PKG
 
@@ -81,7 +88,7 @@ fi
 
 tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ~/
 cd ~/mxnet
-sudo make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas
+sudo make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas USE_LAPACK=1
 
 cd ~/mxnet/python
 sudo pip install --no-cache-dir -e .
