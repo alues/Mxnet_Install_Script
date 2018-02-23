@@ -4,6 +4,7 @@ cur_usr=`basename ~/`
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/" | tr -d '\n'`
 cur_workdir=${cur_path}/Mxnet
+MXNET_INSTALL_ROOT=/usr/local
 
 # Stop the script when any Error occur
 set -e
@@ -43,14 +44,14 @@ for v in ${Mxnet_Kit_list[@]}; do
     fi
 done
 
-# Extarct CTC
-tar -xvf ${cur_workdir}/warp-ctc*.tar.gz -C ~/
 # Extarct Mxnet
-tar -xvf ${cur_workdir}/mxnet*.tar.gz -C ~/
-sudo chown -R ${cur_usr} ~/mxnet
+sudo tar -xvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}/
+# Extarct CTC
+sudo tar -xvf ${cur_workdir}/warp-ctc*.tar.gz -C ${MXNET_INSTALL_ROOT}/mxnet/
 
+sudo chown -R ${cur_usr} ${MXNET_INSTALL_ROOT}/mxnet
 # Install Warp-CTC
-cd ~/warp-ctc
+cd ${MXNET_INSTALL_ROOT}/mxnet/warp-ctc
 mkdir -p build
 cd build
 cmake ..
@@ -59,7 +60,7 @@ sudo make install
 sudo ldconfig
 
 # Install Mxnet
-cd ~/mxnet
+cd ${MXNET_INSTALL_ROOT}/mxnet
 cp make/config.mk .
 
 echo 'USE_CUDA=1' >>config.mk
@@ -75,12 +76,13 @@ make -j$(nproc)
 sudo apt-get install -y ipython ipython-notebook
 
 # Install Mxnet Python
-cd ~/mxnet/python
-sudo pip install --no-cache-dir -e .
+cd ${MXNET_INSTALL_ROOT}/mxnet/python
+sudo pip2 install --no-cache-dir -e .
 sudo pip3 install --no-cache-dir -e .
 
 # Install Python PIP Plugins
-sudo pip install graphviz
+sudo pip2 install graphviz
+sudo pip3 install graphviz
 # sudo pip install jupyter
 
 echo_success "Done! MXNet for Python installation is complete. Go ahead and explore MXNet with Python :-)"

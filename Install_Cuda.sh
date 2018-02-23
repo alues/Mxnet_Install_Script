@@ -145,6 +145,7 @@ if ${var_auto_reboot}; then
             echo_success "Reboot has been canceled"
         ;;
         *)
+			echo_success "Rebooting"
             sudo reboot now
         ;;
     esac

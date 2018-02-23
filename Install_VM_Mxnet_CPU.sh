@@ -4,6 +4,7 @@ cur_usr=`basename ~/`
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/" | tr -d '\n'`
 cur_workdir=${cur_path}/Mxnet
+MXNET_INSTALL_ROOT=/usr/local
 
 # Stop the script when any Error occur
 set -e
@@ -86,11 +87,12 @@ if [ -d ${pip_plugin_path} ]; then
     done
 fi
 
-tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ~/
-cd ~/mxnet
+tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}/
+cd ${MXNET_INSTALL_ROOT}/mxnet
 sudo make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas USE_LAPACK=1
 
-cd ~/mxnet/python
-sudo pip install --no-cache-dir -e .
+cd ${MXNET_INSTALL_ROOT}/mxnet/python
+sudo pip2 install --no-cache-dir -e .
+sudo pip3 install --no-cache-dir -e .
 
 echo_success "Mxnet Install Done"

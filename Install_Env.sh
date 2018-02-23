@@ -104,8 +104,8 @@ fi
 
 # Init Mxnet -> Env
 PROFILE_ROOT=/etc/profile.d/digits.sh
-
-echo "export MXNET_ROOT=~/mxnet" >> ${PROFILE_ROOT}
+MXNET_INSTALL_ROOT=/usr/local/mxnet
+echo "export MXNET_ROOT=${MXNET_INSTALL_ROOT}" >> ${PROFILE_ROOT}
 echo 'export PYTHONPATH=$MXNET_ROOT/python:$PYTHONPATH' >> ${PROFILE_ROOT}
 echo "export DEV_MODE=${DEV_MODE}" >> ${PROFILE_ROOT}
 
