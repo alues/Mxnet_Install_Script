@@ -145,7 +145,7 @@ if ${var_auto_reboot}; then
             echo_success "Reboot has been canceled"
         ;;
         *)
-			echo_success "Rebooting"
+            echo_success "Rebooting"
             sudo reboot now
         ;;
     esac
@@ -157,6 +157,11 @@ else
     echo 'export PATH=$CUDA_HOME/bin:$PATH' >> ${CUDA_Profile_Root}
     echo 'export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH' >> ${CUDA_Profile_Root}
     echo 'export INCLUDE=$CUDA_HOME/include:$INCLUDE' >> ${CUDA_Profile_Root}
+    # Include PATH for gcc
+    echo 'export C_INCLUDE_PATH=$CUDA_HOME/include:$C_INCLUDE_PATH' >> ${CUDA_Profile_Root}
+    # Include PATH for g++
+    echo 'export CPLUS_INCLUDE_PATH=$CUDA_HOME/include:$CPLUS_INCLUDE_PATH' >> ${CUDA_Profile_Root}
+    
     source ${CUDA_Profile_Root}
 
     # CUDA Conf Env

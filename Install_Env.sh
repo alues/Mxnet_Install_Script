@@ -1,6 +1,6 @@
 #!bin/bash
 
-cur_usr=`basename $HOME`
+cur_usr=${SUDO_USER:-$(whoami)}
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/" | tr -d '\n'`
 DEV_MODE=true
@@ -33,7 +33,7 @@ case ${cur_sys} in
         sudo apt-get install -y python-dev python-pip python3-pip python-opencv
 
         # Libs For blas opencv
-        sudo apt-get install -y libblas-dev libatlas-base-dev liblapack-dev libopencv-dev gfortran
+        sudo apt-get install -y libblas-dev libopenblas-dev libatlas-base-dev liblapack-dev libopencv-dev gfortran
 
         # Libs For Pillow
         sudo apt-get install -y zlib1g-dev libtiff5-dev libjpeg8-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk

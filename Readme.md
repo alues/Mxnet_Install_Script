@@ -24,7 +24,7 @@
 > * Auto Deploy Basic Software
 > * Auto Install Python2 & Python3 Plugins
 > * Extract [Pycharm](https://www.jetbrains.com/pycharm/)[Option]
-> * Export Mxnet Env
+> * **Export Mxnet Env**
 
 ```bash
     sudo bash Install_Env.sh
