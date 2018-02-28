@@ -21,7 +21,7 @@ function echo_success(){
 }
 
 function service_detect(){
-    tmp_status=`service --status-all | sed -r "s/^\s*\[\s*[+|-]\s*\]\s*${1}\$/true/;tA;d;:A;" | tr -d '\n'`
+    tmp_status=`systemctl is-active ${1} | sed -r "s/^active\$/true/;tA;d;:A;" | tr -d '\n'`
     printf ${tmp_status:-false}
 }
 
@@ -32,6 +32,11 @@ function modules_detect(){
 
 function runlevel_detect(){
     tmp_status=`runlevel | sed -r "s/^[N0-6]\s+${1}\$/true/;tA;d;:A;" | tr -d '\n'`
+    printf ${tmp_status:-false}
+}
+
+function default_detect(){
+    tmp_status=`systemctl get-default | sed -r "s/^(graphical.target)\$/true/;tA;d;:A;" | tr -d '\n'`
     printf ${tmp_status:-false}
 }
 
@@ -61,18 +66,22 @@ case ${cur_sys} in
     "ubuntu")
         Desktop_Service=`service_detect "lightdm"`
         if ${Desktop_Service}; then
-            sudo service lightdm stop
+            sudo systemctl stop lightdm.service
         fi
     ;;
     "centos")
-        Desktop_Service=`runlevel_detect "5"`
+        Desktop_Service=`service_detect "gdm"`
         if ${Desktop_Service}; then
-            sudo systemctl set-default multi-user.target
-            sudo systemctl isolate multi-user.target
+            sudo systemctl stop gdm.service
         fi
     ;;
 esac
 echo_success "Detecting Graphical Service : [ ${Desktop_Service} ]"
+
+# Switch Default mode
+if `default_detect`; then
+    sudo systemctl set-default multi-user.target
+fi
 
 # Disable the Nouveau
 echo_error "Detecting Nouveau module"
@@ -181,7 +190,8 @@ else
             case ${cur_sys} in
                 "ubuntu")
                     if ${Desktop_Service}; then
-                        sudo service lightdm start
+                        sudo systemctl set-default graphical.targetcd
+                        sudo systemctl start lightdm.service
                     fi
                 ;;
                 "centos")
