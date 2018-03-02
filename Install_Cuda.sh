@@ -1,4 +1,4 @@
-#!bin/bash
+#!/usr/bin/env bash
 
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/Nvidia_CUDA
@@ -50,9 +50,11 @@ CUDA_Kit_list=(
 # Detect CUDA & CUDNN
 echo_error "Detecting CUDA runtime"
 for v in ${CUDA_Kit_list[@]}; do
-    if [ ! -e ${cur_workdir}/${v} ]; then
+    if [ -e ${cur_workdir}/${v} ]; then
+        echo_success "Found -> [ $(basename ${cur_workdir}/${v}) ]"
+    else
         echo_error 'Please make sure u had download CUDA & CUDNN Kit'
-        echo_success "Problem could be solved by reading ${cur_workdir}/readme.md"
+        echo_success "Problem could be solved by reading ${cur_workdir}/Readme.md"
         echo_error "${cur_workdir}/${v} Needed"
         exit 1
     fi
@@ -147,7 +149,7 @@ fi
 
 # Reboot was needed for disable nouveau
 if ${var_auto_reboot}; then
-    echo_error "Please rerun this script after reboot ! ! !"
+    echo_error "Please Rerun this script after reboot ! ! !"
     read -n1 -sp "Press any key except 'ESC' to reboot: " var_ikey
     case ${var_ikey:=*} in
         $'\e')
@@ -197,7 +199,8 @@ else
                 "centos")
                     if ${Desktop_Service}; then
                         sudo systemctl set-default graphical.target
-                        sudo systemctl isolate graphical.target
+                        sudo systemctl start gdm.service
+                        #sudo systemctl isolate graphical.target
                     fi
                 ;;
             esac

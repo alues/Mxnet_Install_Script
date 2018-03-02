@@ -1,4 +1,4 @@
-#!bin/bash
+#!/usr/bin/env bash
 
 cur_usr=${SUDO_USER:-$(whoami)}
 cur_home=`cat /etc/passwd | grep ${cur_usr} | awk -F ":" '{print $6}'`

@@ -1,4 +1,4 @@
-#!bin/bash
+#!/usr/bin/env bash
 
 cur_usr=${SUDO_USER:-$(whoami)}
 cur_path=$(cd "$(dirname "$0")"; pwd)
@@ -36,9 +36,11 @@ Mxnet_Kit_list=(
 
 # Dectect Mxnet & Warp-CTC
 for v in ${Mxnet_Kit_list[@]}; do
-    if [ ! -e ${cur_workdir}/${v} ]; then
+    if [ -e ${cur_workdir}/${v} ]; then
+    	echo_success "Found -> [ $(basename ${cur_workdir}/${v}) ]"
+    else
         echo_error 'Please make sure u had download Mxnet & Warp-CTC'
-        echo_success "Problem could be solved by reading ${cur_workdir}/readme.md"
+        echo_success "Problem could be solved by reading ${cur_workdir}/Readme.md"
         echo_error "${cur_workdir}/${v} Needed"
         exit 1
     fi
