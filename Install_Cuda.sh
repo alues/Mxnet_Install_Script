@@ -21,7 +21,7 @@ function echo_success(){
 }
 
 function service_detect(){
-    tmp_status=`systemctl is-active ${1} | sed -r "s/^active\$/true/;tA;d;:A;" | tr -d '\n'`
+    tmp_status=`systemctl list-unit-files ${1} | sed -r "s/^${1}\s+(enabled|disabled|masked|static)\$/true/;tA;d;:A;" | tr -d '\n'`
     printf ${tmp_status:-false}
 }
 
@@ -66,13 +66,13 @@ echo_error "Detecting Graphical Service"
 Desktop_Service=false
 case ${cur_sys} in
     "ubuntu")
-        Desktop_Service=`service_detect "lightdm"`
+        Desktop_Service=`service_detect lightdm.service`
         if ${Desktop_Service}; then
             sudo systemctl stop lightdm.service
         fi
     ;;
     "centos")
-        Desktop_Service=`service_detect "gdm"`
+        Desktop_Service=`service_detect gdm.service`
         if ${Desktop_Service}; then
             sudo systemctl stop gdm.service
         fi
@@ -124,7 +124,7 @@ echo_success "Installing OS Env : [ Done ]"
 
 # Nvidia Driver Detect
 echo_error "Detecting Nvidia module"
-var_nvidia_exist=`modules_detect "nvidia"`
+var_nvidia_exist=`modules_detect nvidia`
 echo_success "Detecting Nvidia module : [ ${var_nvidia_exist} ]"
 
 # CUDA Install
@@ -136,7 +136,7 @@ else
         if ! ${var_auto_reboot}; then
             sudo bash ${Nvidia_Driver} --dkms --disable-nouveau --run-nvidia-xconfig --silent
             echo_error "ReDetecting Nvidia module"
-            var_nvidia_exist=`modules_detect "nvidia"`
+            var_nvidia_exist=`modules_detect nvidia`
             echo_success "ReDetecting Nvidia module : [ ${var_nvidia_exist} ]"
             if ${var_nvidia_exist}; then
                 sudo bash ${cur_workdir}/cuda_*_*_linux.run --toolkit --override --silent
