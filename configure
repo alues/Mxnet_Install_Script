@@ -3,6 +3,7 @@
 use 5.006;
 use strict;
 use warnings;
+use Data::Dumper;
 
 sub shell ($@) {
     my ($cmd, $dry_run) = @_;
@@ -19,20 +20,35 @@ sub trim ($) {
     $cmd;
 }
 
+my $cur_usr = `printf \${SUDO_USER:-\$(whoami)}`;
 my $cur_sys = `cat /etc/*-release | sed -r "s/^ID=(.*)\$/\\1/;tA;d;:A;s/^\\"(.*)\\"\$/\\1/" | tr -d '\n'`;
 
 my %config = (
-    "centos" => {"CMD" => "yum"},
-    "ubuntu" => {"CMD" => "apt-get"},
+    'centos' => {'CMD' => 'yum'},
+    'ubuntu' => {'CMD' => 'apt-get'},
 );
 
-my @tmp_rumtime_list = (
-    # CUDA
-    'cuda_*_*_linux.run',
-    # CUDNN
-    'cudnn-*.tgz',
+my @exec_list = (
+    'CUDA_Kit_List',
 );
 
-foreach my $tmp_key (keys %config){
-    $config{$tmp_key}{"CUDA_Kit_List"} = [@tmp_rumtime_list];
+sub CUDA_Kit_List{
+    my $fun_name=(caller(0))[3];
+    $fun_name =~ s/^.+:://;
+
+    my %tmp_rumtime_list = (
+        'CUDA' => 'cuda_*_*_linux.run',
+        'CUDNN' => 'cudnn-*.tgz',
+    );
+
+    foreach my $tmp_sys (keys %config){
+        $config{$tmp_sys}{$fun_name} = {%tmp_rumtime_list};
+    }
 }
+
+foreach my $tmp_fun (@exec_list){
+    printf "Exec -> [ %s ]\n", $tmp_fun;
+    eval "$tmp_fun()";
+}
+
+print Dumper(%config);

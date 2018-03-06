@@ -40,6 +40,14 @@ function default_detect(){
     printf ${tmp_status:-false}
 }
 
+# Vshell Detect
+VShell=${WINDOWID:+true}
+if ${VShell:=false}; then
+    echo_error "VShell can't complete the installtion"
+    echo_success 'Switch the terminal by `Ctrl + Alt + F1-F6`'
+    exit 1
+fi
+
 CUDA_Kit_list=(
     # CUDA
     cuda_*_*_linux.run
