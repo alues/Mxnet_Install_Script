@@ -1,7 +1,7 @@
 # Start with a base docker image that contains CUDA and CUDNN
 FROM cuda:base
 
-MAINTAINER Alues “alues@icloud.com”
+MAINTAINER Alues <alues@icloud.com>
 
 # Remove Nvidia GPG Key & apt_list
 RUN apt-key del 7FA2AF80 \

@@ -108,6 +108,9 @@ if ${var_auto_reboot}; then
         "ubuntu")
             # Update Source
             sudo apt-get update
+
+            # Fixed missing kernel 4.13+ firmware issue
+            sudo apt-get install --reinstall linux-firmware
             sudo update-initramfs -u
         ;;
         "centos")
@@ -200,7 +203,7 @@ else
             case ${cur_sys} in
                 "ubuntu")
                     if ${Desktop_Service}; then
-                        sudo systemctl set-default graphical.targetcd
+                        sudo systemctl set-default graphical.target
                         sudo systemctl start lightdm.service
                     fi
                 ;;
@@ -208,7 +211,6 @@ else
                     if ${Desktop_Service}; then
                         sudo systemctl set-default graphical.target
                         sudo systemctl start gdm.service
-                        #sudo systemctl isolate graphical.target
                     fi
                 ;;
             esac
