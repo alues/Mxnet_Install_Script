@@ -11,7 +11,7 @@
 > > - [x] [Ubuntu 16.04.3 LTS](https://www.ubuntu.com/download/desktop)
 
 > * **Make sure u had download the [CUDA](https://developer.nvidia.com/cuda-toolkit-archive) &amp; [CUDNN](https://developer.nvidia.com/rdp/cudnn-download) Before Installation**  
-> * **Switch the terminal by `Ctrl + Alt + F1-F6`**
+> * **Switch the terminal by `Ctrl + Alt + F1~F6`**
 > * **`Script may need to run twice`**
 
 > ```bash

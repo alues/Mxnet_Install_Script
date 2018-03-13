@@ -44,7 +44,7 @@ function default_detect(){
 VShell=${WINDOWID:+true}
 if ${VShell:=false}; then
     echo_error "VShell can't complete the installtion"
-    echo_success 'Switch the terminal by `Ctrl + Alt + F1-F6`'
+    echo_success 'Switch the terminal by `Ctrl + Alt + F1~F6`'
     exit 1
 fi
 
