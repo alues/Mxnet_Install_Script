@@ -88,11 +88,6 @@ case ${cur_sys} in
 esac
 echo_success "Detecting Graphical Service : [ ${Desktop_Service} ]"
 
-# Switch Default mode
-if `default_detect`; then
-    sudo systemctl set-default multi-user.target
-fi
-
 # Disable the Nouveau
 echo_error "Detecting Nouveau module"
 Nouveau_Blacklist_Root=/etc/modprobe.d/nvidia-installer-disable-nouveau.conf
@@ -197,6 +192,10 @@ else
     read -n1 -sp "Press any key except 'ESC' to launch desktop: " var_ikey
     case ${var_ikey:=*} in
         $'\e')
+            # Switch Default mode
+            if `default_detect`; then
+                sudo systemctl set-default multi-user.target
+            fi
             echo_success "Desktop launch has been canceled"
         ;;
         *)

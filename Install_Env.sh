@@ -115,7 +115,7 @@ source ${PROFILE_ROOT}
 ssh_root=${cur_path}/SSH
 
 if [ -d ${ssh_root} ]; then
-    sudo bash ${ssh_root}/Install_SSH.sh ${1}
+    sudo bash ${ssh_root}/Install_SSH.sh ${cur_usr}
 fi
 
 echo_success "Env Ready"
