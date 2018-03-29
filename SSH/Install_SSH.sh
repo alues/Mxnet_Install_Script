@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cur_usr=${SUDO_USER:-$(whoami)}
+cur_usr=${1:-${SUDO_USER:-$(whoami)}}
 cur_home=`cat /etc/passwd | grep ${cur_usr} | awk -F ":" '{print $6}'`
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_workdir=${cur_path}/SSH-KEY
@@ -54,7 +54,7 @@ sudo sed -ri "s/^\s*#?(\s*HostKey\s+.*)\$/#\\1/g" /etc/ssh/sshd_config
 
 case ${cur_sys} in
     "ubuntu")
-        sudo service ssh restart
+        sudo systemctl restart ssh.service
     ;;
     "centos")
         sudo systemctl restart sshd.service
