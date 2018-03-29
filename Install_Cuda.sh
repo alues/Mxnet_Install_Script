@@ -44,13 +44,13 @@ function default_detect(){
 VShell=${WINDOWID:+true}
 if ${VShell:=false}; then
     echo_error "VShell can't complete the installtion"
-    echo_success 'Switch the terminal by `Ctrl + Alt + F1-F6`'
+    echo_success 'Switch the terminal by `Ctrl + Alt + F1~F6`'
     exit 1
 fi
 
 CUDA_Kit_list=(
     # CUDA
-    cuda_*_*_linux.run
+    cuda_*_*_linux*
     # CUDNN
     cudnn-*.tgz
 )
@@ -87,11 +87,6 @@ case ${cur_sys} in
     ;;
 esac
 echo_success "Detecting Graphical Service : [ ${Desktop_Service} ]"
-
-# Switch Default mode
-if `default_detect`; then
-    sudo systemctl set-default multi-user.target
-fi
 
 # Disable the Nouveau
 echo_error "Detecting Nouveau module"
@@ -197,6 +192,10 @@ else
     read -n1 -sp "Press any key except 'ESC' to launch desktop: " var_ikey
     case ${var_ikey:=*} in
         $'\e')
+            # Switch Default mode
+            if `default_detect`; then
+                sudo systemctl set-default multi-user.target
+            fi
             echo_success "Desktop launch has been canceled"
         ;;
         *)

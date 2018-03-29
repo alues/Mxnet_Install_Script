@@ -36,7 +36,7 @@ case ${cur_sys} in
         sudo apt-get install -y libblas-dev libopenblas-dev libatlas-base-dev liblapack-dev libopencv-dev gfortran
 
         # Libs For Pillow
-        sudo apt-get install -y zlib1g-dev libtiff5-dev libjpeg8-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+        sudo apt-get install -y zlib1g-dev libtiff5-dev libjpeg8-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk python3-tk
     ;;
     "centos")
         # Install System Status Monitor
@@ -115,7 +115,7 @@ source ${PROFILE_ROOT}
 ssh_root=${cur_path}/SSH
 
 if [ -d ${ssh_root} ]; then
-    sudo bash ${ssh_root}/Install_SSH.sh
+    sudo bash ${ssh_root}/Install_SSH.sh ${cur_usr}
 fi
 
 echo_success "Env Ready"

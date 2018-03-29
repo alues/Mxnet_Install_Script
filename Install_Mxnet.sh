@@ -37,12 +37,17 @@ Mxnet_Kit_list=(
 # Dectect Mxnet & Warp-CTC
 for v in ${Mxnet_Kit_list[@]}; do
     if [ -e ${cur_workdir}/${v} ]; then
-    	echo_success "Found -> [ $(basename ${cur_workdir}/${v}) ]"
+        echo_success "Found -> [ $(basename ${cur_workdir}/${v}) ]"
     else
-        echo_error 'Please make sure u had download Mxnet & Warp-CTC'
-        echo_success "Problem could be solved by reading ${cur_workdir}/Readme.md"
-        echo_error "${cur_workdir}/${v} Needed"
-        exit 1
+        if [ -e ${cur_workdir}/Clone_mxnet.sh ]; then
+            echo_error ''
+            sudo bash ${cur_workdir}/Clone_mxnet.sh
+        else
+            echo_error 'Please make sure u had download Mxnet & Warp-CTC'
+            echo_success "Problem could be solved by reading ${cur_workdir}/Readme.md"
+            echo_error "${cur_workdir}/${v} Needed"
+            exit 1
+        fi
     fi
 done
 
