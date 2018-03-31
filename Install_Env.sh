@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S -P /usr/local/bin:/usr/bin:${PATH} bash
 
 cur_usr=${SUDO_USER:-$(whoami)}
 cur_path=$(cd "$(dirname "$0")"; pwd)

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S -P /usr/local/bin:/usr/bin:${PATH} bash
 
 cur_usr=${1:-${SUDO_USER:-$(whoami)}}
 cur_home=`cat /etc/passwd | grep ${cur_usr} | awk -F ":" '{print $6}'`
@@ -22,6 +22,14 @@ function echo_success(){
     echo -e "${Color_Success}${1}${Color_Res}"
 }
 
+function docker_detect(){
+    if [ -f /.dockerenv* ]; then
+        printf true
+    else
+        printf false
+    fi
+}
+
 # Update the apt List
 case ${cur_sys} in
     "ubuntu")
@@ -33,8 +41,8 @@ case ${cur_sys} in
     ;;
 esac
 
+# Create sshd dir
 sudo mkdir -p ${cur_home}/.ssh
-sudo chmod 700 ${cur_home}/.ssh
 
 # Auth Pub KEY
 if [ -f ${cur_workdir}/id_*.pub ]; then
@@ -43,6 +51,7 @@ if [ -f ${cur_workdir}/id_*.pub ]; then
 fi
 
 # Switch Permission
+sudo chmod 700 ${cur_home}/.ssh
 chown -R ${cur_usr} ${cur_home}/.ssh
 
 # Disable Password Login
@@ -50,14 +59,20 @@ sudo sed -ri "s/^\s*#?(\s*PasswordAuthentication)\s+(yes|no)\$/\\1 no/g" /etc/ss
 sudo sed -ri "s/^\s*#?(\s*UsePAM)\s+(yes|no)\$/\\1 no/g" /etc/ssh/sshd_config
 sudo sed -ri "s/^\s*#?(\s*HostKey\s+.*)\$/#\\1/g" /etc/ssh/sshd_config
 
-# sudo rm -rf /etc/ssh/*.pub /etc/ssh/*_key
-
 case ${cur_sys} in
     "ubuntu")
-        sudo systemctl restart ssh.service
+        if `docker_detect`; then
+            sudo service ssh restart
+        else
+            sudo systemctl restart ssh.service
+        fi
     ;;
     "centos")
-        sudo systemctl restart sshd.service
+        if `docker_detect`; then
+            sudo service sshd restart
+        else
+            sudo systemctl restart sshd.service
+        fi
     ;;
 esac
 

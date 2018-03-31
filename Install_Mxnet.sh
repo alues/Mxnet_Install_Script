@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S -P /usr/local/bin:/usr/bin:${PATH} bash
 
 cur_usr=${SUDO_USER:-$(whoami)}
 cur_path=$(cd "$(dirname "$0")"; pwd)
@@ -52,9 +52,9 @@ for v in ${Mxnet_Kit_list[@]}; do
 done
 
 # Extarct Mxnet
-sudo tar -xvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}/
+sudo tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}/
 # Extarct CTC
-sudo tar -xvf ${cur_workdir}/warp-ctc*.tar.gz -C ${MXNET_INSTALL_ROOT}/mxnet/
+sudo tar -zxvf ${cur_workdir}/warp-ctc*.tar.gz -C ${MXNET_INSTALL_ROOT}/mxnet/
 
 sudo chown -R ${cur_usr} ${MXNET_INSTALL_ROOT}/mxnet
 # Install Warp-CTC

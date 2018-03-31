@@ -7,6 +7,7 @@
 
 > > ### Tested OS
 > > - [x] [Centos 7](https://www.centos.org/download/)
+> > - [x] [Docker [GPU]](https://github.com/NVIDIA/nvidia-docker)
 > > - [x] Ubuntu 14.04.5 LTS
 > > - [x] [Ubuntu 16.04.3 LTS](https://www.ubuntu.com/download/desktop)
 
