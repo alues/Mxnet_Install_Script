@@ -40,7 +40,7 @@ for v in ${Mxnet_Kit_list[@]}; do
         echo_success "Found -> [ $(basename ${cur_workdir}/${v}) ]"
     else
         if [ -e ${cur_workdir}/Clone_mxnet.sh ]; then
-            echo_error ''
+            echo_error 'Try to Download Mxnet & Warp-CTC'
             sudo bash ${cur_workdir}/Clone_mxnet.sh
         else
             echo_error 'Please make sure u had download Mxnet & Warp-CTC'
