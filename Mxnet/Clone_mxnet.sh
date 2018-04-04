@@ -19,11 +19,11 @@ function echo_success(){
 }
 
 git clone --recursive https://github.com/apache/incubator-mxnet.git ${cur_path}/mxnet
-tar -zcvf mxnet.tar.gz -C ${cur_path} mxnet
+tar -zcvf ${cur_path}/mxnet.tar.gz -C ${cur_path} mxnet
 rm -rf ${cur_path}/mxnet
 
 git clone --recursive https://github.com/baidu-research/warp-ctc.git ${cur_path}/warp-ctc
-tar -zcvf warp-ctc.tar.gz -C ${cur_path} warp-ctc
+tar -zcvf ${cur_path}/warp-ctc.tar.gz -C ${cur_path} warp-ctc
 rm -rf ${cur_path}/warp-ctc
 
 echo_success "Clone Done!"

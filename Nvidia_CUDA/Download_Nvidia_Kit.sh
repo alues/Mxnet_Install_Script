@@ -19,7 +19,7 @@ function echo_success(){
 }
 
 echo_error "Download : Nvidia-Driver"
-wget http://us.download.nvidia.com/XFree86/Linux-x86_64/390.25/NVIDIA-Linux-x86_64-390.25.run -P ${cur_path}/
+wget http://us.download.nvidia.com/XFree86/Linux-x86_64/390.48/NVIDIA-Linux-x86_64-390.48.run -P ${cur_path}/
 echo_success "Download : Nvidia-Driver -> [ Done ]"
 
 echo_error "Download : CUDA-Kit"

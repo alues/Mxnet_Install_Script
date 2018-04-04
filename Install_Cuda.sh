@@ -61,10 +61,15 @@ for v in ${CUDA_Kit_list[@]}; do
     if [ -e ${cur_workdir}/${v} ]; then
         echo_success "Found -> [ $(basename ${cur_workdir}/${v}) ]"
     else
-        echo_error 'Please make sure u had download CUDA & CUDNN Kit'
-        echo_success "Problem could be solved by reading ${cur_workdir}/Readme.md"
-        echo_error "${cur_workdir}/${v} Needed"
-        exit 1
+    	if [ -e ${cur_workdir}/Download_Nvidia_Kit.sh ]; then
+            echo_error 'Try to Download CUDA & CUDNN Kit'
+            sudo bash ${cur_workdir}/Download_Nvidia_Kit.sh
+        else
+        	echo_error 'Please make sure u had download CUDA & CUDNN Kit'
+        	echo_success "Problem could be solved by reading ${cur_workdir}/Readme.md"
+        	echo_error "${cur_workdir}/${v} Needed"
+        	exit 1
+        fi
     fi
 done
 echo_success "Detecting CUDA runtime : [ Done ]"
