@@ -59,7 +59,7 @@ esac
 pip_plugin_path=${cur_path}/Python_PKG
 
 if [ -d ${pip_plugin_path} ]; then
-    sudo pip install --no-cache-dir -U ${pip_plugin_path}/pip-*.tar.gz
+    sudo pip2 install --no-cache-dir -U ${pip_plugin_path}/pip-*.tar.gz
     # Install PIP Plugins
     pip_plugin_list=(
         setuptools-*.zip
@@ -72,7 +72,7 @@ if [ -d ${pip_plugin_path} ]; then
     )
     
     for v in ${pip_plugin_list[@]}; do
-        sudo pip install --no-cache-dir ${pip_plugin_path}/${v}
+        sudo pip2 install --no-cache-dir ${pip_plugin_path}/${v}
     done
     
     sudo pip3 install --no-cache-dir -U ${pip_plugin_path}/pip-*.tar.gz

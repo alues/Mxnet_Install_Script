@@ -27,7 +27,7 @@ wget https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/cuda_9.
 echo_success "Download : CUDA-Kit -> [ Done ]"
 
 echo_error "Download : CUDNN-Kit"
-
+wget http://cdn.xssfox.com/dist/cudnn-9.1-linux-x64-v7.1.tgz -P ${cur_path}/
 echo_success "Download : CUDNN-Kit -> [ Done ]"
 
 echo_success "Download Done!"
