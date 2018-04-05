@@ -23,7 +23,7 @@ wget http://us.download.nvidia.com/XFree86/Linux-x86_64/390.48/NVIDIA-Linux-x86_
 echo_success "Download : Nvidia-Driver -> [ Done ]"
 
 echo_error "Download : CUDA-Kit"
-wget https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/cuda_9.1.85_387.26_linux -O cuda_9.1.85_387.26_linux.run -P ${cur_path}/
+wget https://developer.nvidia.com/compute/cuda/9.1/Prod/local_installers/cuda_9.1.85_387.26_linux -P ${cur_path}/
 echo_success "Download : CUDA-Kit -> [ Done ]"
 
 echo_error "Download : CUDNN-Kit"

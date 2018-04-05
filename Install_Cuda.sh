@@ -140,7 +140,7 @@ echo_success "Detecting Nvidia module : [ ${var_nvidia_exist} ]"
 
 # CUDA Install
 if ${var_nvidia_exist}; then
-    sudo bash ${cur_workdir}/cuda_*_*_linux.run --toolkit --override --silent
+    sudo bash ${cur_workdir}/cuda_*_*_linux* --toolkit --override --silent
 else
     Nvidia_Driver=${cur_workdir}/NVIDIA-Linux-x86_64-*.*.run
     if [ -e ${Nvidia_Driver} ]; then
@@ -150,11 +150,11 @@ else
             var_nvidia_exist=`modules_detect nvidia`
             echo_success "ReDetecting Nvidia module : [ ${var_nvidia_exist} ]"
             if ${var_nvidia_exist}; then
-                sudo bash ${cur_workdir}/cuda_*_*_linux.run --toolkit --override --silent
+                sudo bash ${cur_workdir}/cuda_*_*_linux* --toolkit --override --silent
             fi
         fi
     else
-        sudo bash ${cur_workdir}/cuda_*_*_linux.run --driver --no-opengl-libs --run-nvidia-xconfig --toolkit --override --silent
+        sudo bash ${cur_workdir}/cuda_*_*_linux* --driver --no-opengl-libs --run-nvidia-xconfig --toolkit --override --silent
     fi
 fi
 
