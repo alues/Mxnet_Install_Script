@@ -87,6 +87,14 @@ if [ -d ${pip_plugin_path} ]; then
     done
 fi
 
+# Extract Pycharm
+pycharm_path=${cur_path}/Pycharm
+
+if [ ${DEV_MODE} = true ] && [ -d ${pycharm_path} ]; then
+    tar -xvf ${pycharm_path}/pycharm-*.tar.gz -C ~/
+    sudo chown -R ${cur_usr} ~/pycharm-*
+fi
+
 tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}/
 cd ${MXNET_INSTALL_ROOT}/mxnet
 sudo make -j $(nproc) USE_OPENCV=1 USE_BLAS=openblas USE_LAPACK=1

@@ -4,7 +4,8 @@ cur_usr=${SUDO_USER:-$(whoami)}
 cur_path=$(cd "$(dirname "$0")"; pwd)
 cur_sys=`cat /etc/*-release | sed -r "s/^ID=(.*)$/\\1/;tA;d;:A;s/^\"(.*)\"$/\\1/" | tr -d '\n'`
 cur_workdir=${cur_path}/Mxnet
-MXNET_INSTALL_ROOT=/usr/local
+# Defined in ENV script
+MXNET_INSTALL_ROOT=/usr/local/mxnet
 
 # Stop the script when any Error occur
 set -e
@@ -51,14 +52,17 @@ for v in ${Mxnet_Kit_list[@]}; do
     fi
 done
 
-# Extarct Mxnet
-sudo tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}/
-# Extarct CTC
-sudo tar -zxvf ${cur_workdir}/warp-ctc*.tar.gz -C ${MXNET_INSTALL_ROOT}/mxnet/
 
-sudo chown -R ${cur_usr} ${MXNET_INSTALL_ROOT}/mxnet
+# Extarct Mxnet
+mkdir ${MXNET_INSTALL_ROOT}
+sudo tar -zxvf ${cur_workdir}/mxnet*.tar.gz -C ${MXNET_INSTALL_ROOT}
+# Extarct CTC
+mkdir ${MXNET_INSTALL_ROOT}/warp-ctc
+sudo tar -zxvf ${cur_workdir}/warp-ctc*.tar.gz -C ${MXNET_INSTALL_ROOT}/warp-ctc
+
+sudo chown -R ${cur_usr} ${MXNET_INSTALL_ROOT}
 # Install Warp-CTC
-cd ${MXNET_INSTALL_ROOT}/mxnet/warp-ctc
+cd ${MXNET_INSTALL_ROOT}/warp-ctc
 mkdir -p build
 cd build
 cmake ..
@@ -67,12 +71,12 @@ sudo make install
 sudo ldconfig
 
 # Install Mxnet
-cd ${MXNET_INSTALL_ROOT}/mxnet
+cd ${MXNET_INSTALL_ROOT}
 cp make/config.mk .
 
-echo 'USE_CUDA=1' >>config.mk
-echo 'USE_CUDA_PATH=/usr/local/cuda' >>config.mk
-echo 'USE_CUDNN=1' >>config.mk
+echo 'USE_CUDA = 1' >>config.mk
+echo 'USE_CUDA_PATH = /usr/local/cuda' >>config.mk
+echo 'USE_CUDNN = 1' >>config.mk
 echo 'WARPCTC_PATH = $(HOME)/warp-ctc' >>config.mk
 echo 'MXNET_PLUGINS += plugin/warpctc/warpctc.mk' >>config.mk
 
@@ -83,13 +87,13 @@ make -j$(nproc)
 sudo apt-get install -y ipython ipython-notebook
 
 # Install Mxnet Python
-cd ${MXNET_INSTALL_ROOT}/mxnet/python
+cd ${MXNET_INSTALL_ROOT}/python
 sudo pip2 install --no-cache-dir -e .
 sudo pip3 install --no-cache-dir -e .
 
 # Install Python PIP Plugins
-sudo pip2 install graphviz
-sudo pip3 install graphviz
+sudo -H pip2 install graphviz
+sudo -H pip3 install graphviz
 # sudo pip install jupyter
 
 echo_success "Done! MXNet for Python installation is complete. Go ahead and explore MXNet with Python :-)"

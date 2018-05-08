@@ -18,12 +18,13 @@ function echo_success(){
     echo -e "${Color_Success}${1}${Color_Res}"
 }
 
-git clone --recursive https://github.com/apache/incubator-mxnet.git ${cur_path}/mxnet
-tar -zcvf ${cur_path}/mxnet.tar.gz -C ${cur_path} mxnet
-rm -rf ${cur_path}/mxnet
+function git_clone_compress(){
+    git clone --recursive ${1} ${cur_path}/${2}
+    tar -zcvf ${cur_path}/${2}.tar.gz -C ${cur_path}/${2} $(ls -A ${cur_path}/${2})
+    rm -rf ${cur_path}/${2}
+}
 
-git clone --recursive https://github.com/baidu-research/warp-ctc.git ${cur_path}/warp-ctc
-tar -zcvf ${cur_path}/warp-ctc.tar.gz -C ${cur_path} warp-ctc
-rm -rf ${cur_path}/warp-ctc
+git_clone_compress https://github.com/apache/incubator-mxnet.git mxnet
+git_clone_compress https://github.com/baidu-research/warp-ctc.git warp-ctc
 
 echo_success "Clone Done!"

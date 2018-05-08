@@ -66,9 +66,14 @@ if [ -d ${pip_plugin_path} ]; then
         numpy-*.zip
         graphviz-*.zip
         redis-*.tar.gz
+        tqdm-*.tar.gz
         # Pillow
         olefile-*.zip
         Pillow-*.tar.gz
+        # Scikit
+        scipy-*.tar.gz
+        scikit-learn-*.tar.gz
+        scikit-image-*.tar.gz
     )
     
     for v in ${pip_plugin_list[@]}; do
@@ -82,9 +87,14 @@ if [ -d ${pip_plugin_path} ]; then
         numpy-*.zip
         PyYAML-*.tar.gz
         redis-*.tar.gz
+        tqdm-*.tar.gz
         # Pillow
         olefile-*.zip
         Pillow-*.tar.gz
+        # Scikit
+        scipy-*.tar.gz
+        scikit-learn-*.tar.gz
+        scikit-image-*.tar.gz
         # LMDB
         lmdb-*.tar.gz
     )
@@ -100,15 +110,11 @@ pycharm_path=${cur_path}/Pycharm
 if [ ${DEV_MODE} = true ] && [ -d ${pycharm_path} ]; then
     tar -xvf ${pycharm_path}/pycharm-*.tar.gz -C ~/
     sudo chown -R ${cur_usr} ~/pycharm-*
-fi  
+fi
 
 # Init Mxnet -> Env
 PROFILE_ROOT=/etc/profile.d/digits.sh
-MXNET_INSTALL_ROOT=/usr/local/mxnet
-echo "export MXNET_ROOT=${MXNET_INSTALL_ROOT}" >> ${PROFILE_ROOT}
-echo 'export PYTHONPATH=$MXNET_ROOT/python:$PYTHONPATH' >> ${PROFILE_ROOT}
 echo "export DEV_MODE=${DEV_MODE}" >> ${PROFILE_ROOT}
-
 source ${PROFILE_ROOT}
 
 # Init SSH Server
